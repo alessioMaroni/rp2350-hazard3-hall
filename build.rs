@@ -3,11 +3,15 @@ use std::path::PathBuf;
 
 fn main() {
     println!("cargo:rerun-if-changed=include/rp2350_hall.h");
+    println!("cargo:rerun-if-changed=include/time.h");
+    println!("cargo:rerun-if-changed=include/serial.h");
     println!("cargo:rerun-if-changed=src/serial.c");
+    println!("cargo:rerun-if-changed=src/time.c");
 
     let mut build = cc::Build::new();
     build
         .file("src/serial.c")
+	.file("src/time.c")
         .include("include")
         .flag("-ffreestanding")
         .flag("-Wall")
@@ -26,7 +30,8 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header("include/rp2350_hall.h")
-        .use_core() // Genera binding compatibili no_std
+        .use_core()
+	.wrap_unsafe_ops(true)
         .ctypes_prefix("core::ffi")
         .generate()
         .expect("Impossibile generare i bindings C");

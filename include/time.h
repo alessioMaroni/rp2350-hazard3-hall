@@ -3,12 +3,11 @@
 
 #include <stdint.h>
 
-#define TIME_BASE_ADDR 0x0200_0000
-#define MTIMECMP_ADDR (*(volatile uint64_t *)(TIME_BASE_ADDR + 0x4000))
-#define MTIME_ADDR (*(volatile uint64_t *)(TIME_BASE_ADDR + 0xBFF8))
+#define TIME_BASE_ADDR  0x02000000U
+#define MTIMECMP_PTR ((volatile uint64_t *)(TIME_BASE_ADDR + 0x4000U))
+#define MTIME_PTR    ((volatile uint64_t *)(TIME_BASE_ADDR + 0xBFF8U))
 
-__attribute__((always_inline)) static inline uint64_t read_mtime(void);
-
-__attribute__((always_inline)) static inline void write_mtimecmp(uint64_t value);
+uint64_t read_mtime(void);
+void write_mtimecmp(uint64_t value);
 
 #endif

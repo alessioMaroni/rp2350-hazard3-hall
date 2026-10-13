@@ -24,7 +24,6 @@ set(SAFETY_COMPILE_OPTIONS
     "-Wpointer-arith" "-Wcast-qual" "-Wwrite-strings" "-Wconversion"
     "-fno-strict-aliasing"
     "-ffreestanding"
-    
     "-march=rv32imac_zicsr_zifencei_zba_zbb_zbkb_zbs"
     "-mabi=ilp32"
     "-mcmodel=medlow"
@@ -40,10 +39,11 @@ endif()
 # Define the static library target with its source files
 add_library(rp2350-hazard3-hall STATIC
     src/serial.c
+    src/time.c
 )
 
 # Apply compilation flags specifically for GCC and Clang compilers
-target_compile_options(rp2350-hazard3-hall PRIVATE 
+target_compile_options(rp2350-hazard3-hall PRIVATE
     $<$<OR:$<C_COMPILER_ID:GNU>,$<C_COMPILER_ID:Clang>>:${SAFETY_COMPILE_OPTIONS}>
 )
 

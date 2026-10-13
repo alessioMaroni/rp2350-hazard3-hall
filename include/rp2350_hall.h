@@ -1,7 +1,7 @@
 #ifndef RP2350_HALL_H
 #define RP2350_HALL_H
 
-#ifndef __cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
