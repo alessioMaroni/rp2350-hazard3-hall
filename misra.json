@@ -1,0 +1,6 @@
+{
+    "script": "/usr/share/Cppcheck/addons/misra.py",
+    "args": [
+        "--rule-texts=/dev/null"
+    ]
+}

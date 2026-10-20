@@ -5,8 +5,7 @@
 extern "C" {
 #endif
 
-#include "./serial.h"
-#include "./time.h"
+#include "./uart.h"
 
 #ifdef __cplusplus
 }

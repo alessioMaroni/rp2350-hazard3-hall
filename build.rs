@@ -3,15 +3,12 @@ use std::path::PathBuf;
 
 fn main() {
     println!("cargo:rerun-if-changed=include/rp2350_hall.h");
-    println!("cargo:rerun-if-changed=include/time.h");
-    println!("cargo:rerun-if-changed=include/serial.h");
-    println!("cargo:rerun-if-changed=src/serial.c");
-    println!("cargo:rerun-if-changed=src/time.c");
+    println!("cargo:rerun-if-changed=include/uart.h");
+    println!("cargo:rerun-if-changed=src/uart.c");
 
     let mut build = cc::Build::new();
     build
-        .file("src/serial.c")
-	.file("src/time.c")
+        .file("src/uart.c")
         .include("include")
         .flag("-ffreestanding")
         .flag("-Wall")
