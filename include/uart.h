@@ -72,10 +72,16 @@ typedef struct {
 #define RESETS_RESET_UART0_BIT   ((uint32_t)1U << 26U)
 #define GPIO_FUNC_UART           2U
 
+#define PAD_TX_CONFIG    0x04U
+#define PAD_RX_CONFIG	 0x40U;
+
 /* TODO: Consider to move this macro helper */
 #define REG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
 
 __attribute__((always_inline)) static inline void uart_set_reset(void);
+__attribute__((always_inline)) static inline void uart_reset_wait(void);
+__attribute__((always_inline)) static inline void uart_init_gpio(void);
+__attribute__((always_inline)) static inline void uart_configure(void)
 void uart_init(void);
 
 #endif
