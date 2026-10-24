@@ -2,3 +2,4 @@ unusedFunction
 missingIncludeSystem
 misra-c2012-11.4
 misra-c2012-2.5
+misra-c2012-8.7

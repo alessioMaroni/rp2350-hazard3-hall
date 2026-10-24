@@ -10,4 +10,5 @@ mod raw {
 
 pub mod uart {
 	pub use super::raw::uart_init;
+	pub use super::raw::uart_write_byte;
 }

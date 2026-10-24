@@ -2,27 +2,40 @@
 
 #include <stdint.h>
 
+#define UART_TIMEOUT_CYCLES  1000000U
+
 /**
  * @brief Release UART0 from reset
  */
 __attribute__((always_inline)) static inline void uart_set_reset(void)
 {
         // cppcheck-suppress misra-c2012-11.4
-        RESETS_SET->RESET = RESETS_RESET_UART0_BIT;
+        RESETS->RESET |= RESETS_ALL_REQUIRED;
+
+        for (volatile int i = 0; i < 100; i++) {
+                __asm__ volatile("nop");
+        }
 
         // cppcheck-suppress misra-c2012-11.4
-        RESETS_CLR->RESET = RESETS_RESET_UART0_BIT;
+        RESETS->RESET &= ~RESETS_ALL_REQUIRED;
 }
 
 /**
  * @brief Wait until UART0 is ready (Polling su RESET_DONE)
  */
-__attribute__((always_inline)) static inline void uart_reset_wait(void)
+__attribute__((always_inline)) static inline int uart_reset_wait(void)
 {
-        while ((RESETS->RESET_DONE & RESETS_RESET_UART0_BIT) == 0U)
-	{
+	uint32_t timeout = UART_TIMEOUT_CYCLES;
 
-	}
+        while (((RESETS->RESET_DONE & RESETS_ALL_REQUIRED) != RESETS_ALL_REQUIRED) && (timeout > 0U))
+    	{
+        	timeout--;
+        	__asm__ volatile("nop");
+    	}
+
+	*SIO_SCRATCH1 = RESETS->RESET_DONE;
+
+        return ((RESETS->RESET_DONE & RESETS_ALL_REQUIRED) == RESETS_ALL_REQUIRED) ? 0 : -1;
 }
 
 __attribute__((always_inline)) static inline void uart_init_gpio(void)
@@ -56,10 +69,32 @@ __attribute__((always_inline)) static inline void uart_configure(void)
         UART0->CR = UART_ENABLE;
 }
 
-void uart_init(void)
+int uart_init(void)
 {
         uart_set_reset();
-        uart_reset_wait();
+
+        if (uart_reset_wait() != 0) {
+		*SIO_SCRATCH0 = 0xDEAD0001U;
+        	return -1; /* Timeout hardware */
+    	}
+
         uart_init_gpio();
         uart_configure();
+
+	return 0;
+}
+
+__attribute__((always_inline)) static inline void uart_wait_tx_free_space(void)
+{
+    while ((UART0->FR & UART_FR_TXFF_BIT) != 0U)
+        {
+                __asm__ volatile("nop");
+        }
+
+}
+
+void uart_write_byte(uint8_t byte)
+{
+    	uart_wait_tx_free_space();
+        UART0->DR = (uint32_t)byte;
 }
