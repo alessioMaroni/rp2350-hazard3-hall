@@ -10,7 +10,7 @@
 #define UART_H
 
 #include <stdint.h>
-#include "./serial.h"
+#include "serial.h"
 
 /**
  * @brief Subsystem Reset Control Register Layout (RESETS).

@@ -1,5 +1,5 @@
-#include "../include/uart.h"
-#include "../include/helpers.h"
+#include "uart.h"
+#include "helpers.h"
 
 #include <stdint.h>
 

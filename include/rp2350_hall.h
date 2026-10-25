@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-#include "./uart.h"
+#include "uart.h"
 
 #ifdef __cplusplus
 }

@@ -1,10 +1,22 @@
 [package]
 name = "rp2350-hazard3-hall"
 version = "0.1.0"
+authors = ["Il Tuo Nome <alessiomaronidev@gmail.com>"]
 edition = "2024"
-description = "Hazard3 Hall drivers for RP2350"
-links = "rp2350-hazard3-hall"
-authors = ["alessioMaroni"]
+description = "Bare-metal MISRA-compliant HAL for RP2350 (Hazard3 RISC-V)"
+license = "MIT"
+repository = "https://github.com/alessioMaroni/rp2350-hazard3-hall"
+readme = "README.md"
+keywords = ["embedded", "hal", "rp2350", "riscv", "bare-metal"]
+categories = ["embedded", "hardware-support", "no-std"]
+
+include = [
+	"src/**/*",
+	"include/**/*",
+	"build.rs",
+	"Cargo.toml",
+	"README.md",
+]
 
 [build-dependencies]
 cc = "1.0"
