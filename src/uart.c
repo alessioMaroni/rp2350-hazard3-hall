@@ -1,4 +1,5 @@
 #include "../include/uart.h"
+#include "../include/helpers.h"
 
 #include <stdint.h>
 
@@ -13,7 +14,7 @@ __attribute__((always_inline)) static inline void uart_set_reset(void)
         RESETS->RESET |= RESETS_ALL_REQUIRED;
 
         for (volatile int i = 0; i < 100; i++) {
-                __asm__ volatile("nop");
+                arch_asm_nop();
         }
 
         // cppcheck-suppress misra-c2012-11.4
@@ -30,7 +31,7 @@ __attribute__((always_inline)) static inline int uart_reset_wait(void)
         while (((RESETS->RESET_DONE & RESETS_ALL_REQUIRED) != RESETS_ALL_REQUIRED) && (timeout > 0U))
     	{
         	timeout--;
-        	__asm__ volatile("nop");
+        	arch_asm_nop();
     	}
 
 	*SIO_SCRATCH1 = RESETS->RESET_DONE;
@@ -71,24 +72,27 @@ __attribute__((always_inline)) static inline void uart_configure(void)
 
 int uart_init(void)
 {
-        uart_set_reset();
+	int ret;
 
-        if (uart_reset_wait() != 0) {
-		*SIO_SCRATCH0 = 0xDEAD0001U;
-        	return -1; /* Timeout hardware */
+        uart_set_reset();
+	ret = uart_reset_wait();
+
+	if (ret != 0) {
+        	*SIO_SCRATCH0 = 0xDEAD0001U;
+        	ret = -1; /* Timeout hardware */
+    	} else {
+        	uart_init_gpio();
+        	uart_configure();
     	}
 
-        uart_init_gpio();
-        uart_configure();
-
-	return 0;
+	return ret;
 }
 
 __attribute__((always_inline)) static inline void uart_wait_tx_free_space(void)
 {
     while ((UART0->FR & UART_FR_TXFF_BIT) != 0U)
         {
-                __asm__ volatile("nop");
+                arch_asm_nop();
         }
 
 }
