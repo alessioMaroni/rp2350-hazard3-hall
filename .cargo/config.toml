@@ -1,0 +1,34 @@
+[alias]
+c = "check --target riscv32imac-unknown-none-elf"
+cl = "clean"
+b = "build --target riscv32imac-unknown-none-elf --release"
+v = "check --target riscv32imac-unknown-none-elf --all-targets"
+
+[build]
+target = "riscv32imac-unknown-none-elf"
+rustflags = [
+    "-C", "opt-level=z",
+    "-C", "overflow-checks=on",
+    "-C", "panic=abort",
+    "-D", "warnings",
+    "-D", "unsafe_code",
+    "-D", "unused_must_use",
+]
+
+[target.riscv32imac-unknown-none-elf]
+runner = "probe-rs run --chip RP2350"
+
+[profile.dev]
+opt-level = 0
+debug = true
+overflow-checks = true
+lto = false
+
+[profile.release]
+opt-level = "z"
+debug = false
+overflow-checks = true
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

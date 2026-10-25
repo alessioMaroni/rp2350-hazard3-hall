@@ -1,0 +1,21 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    container: alpine:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies (Alpine APK)
+        run: |
+          apk add --no-cache make cppcheck clang build-base gcc-riscv-none-elf
+
+      - name: Run MISRA Verification
+        run: make verify
