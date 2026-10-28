@@ -34,6 +34,15 @@ fn main() {
 				"riscv64-linux-gnu-gcc",
 			];
 
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    bindings
+        .write_to_file(out_path.join("bindings.rs"))
+        .expect("Impossibile scrivere bindings.rs");
+=======
+>>>>>>> uart
 			for compiler in candidates {
 				if std::process::Command::new(compiler)
 					.arg("--version")
@@ -58,8 +67,15 @@ fn main() {
 		.header(include_dir.join("rp2350_hall.h").to_str().unwrap())
 		.clang_arg(format!("-I{}", include_dir.display()))
 		.use_core()
+<<<<<<< HEAD
 		.wrap_unsafe_ops(true)
 		.ctypes_prefix("core::ffi")
+=======
+		.ctypes_prefix("core::ffi")
+		.wrap_unsafe_ops(true)
+		.raw_line("#[allow(warnings)]")
+		.raw_line("#[allow(unsafe_op_in_unsafe_fn)]")
+>>>>>>> uart
 		.generate()
 		.expect("Impossibile generare i bindings C");
 
@@ -67,4 +83,8 @@ fn main() {
 	bindings
 		.write_to_file(out_path.join("bindings.rs"))
 		.expect("Impossibile scrivere bindings.rs");
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> uart
 }
