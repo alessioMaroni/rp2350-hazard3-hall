@@ -7,8 +7,8 @@ set(CMAKE_SYSTEM_PROCESSOR riscv32)
 
 # Define the project name, version, description, and supported languages
 project(rp2350-hazard3-hall
-    VERSION 0.1.0
-    DESCRIPTION " "
+    VERSION 0.1.1
+    DESCRIPTION "Bare-metal MISRA C compliant HAL for RP2350 Hazard3 RISC-V"
     LANGUAGES C
 )
 

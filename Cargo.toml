@@ -1,13 +1,14 @@
 [package]
 name = "rp2350-hazard3-hall"
-version = "0.1.0"
-authors = ["Il Tuo Nome <alessiomaronidev@gmail.com>"]
+version = "0.1.1"
+authors = ["Alessio Maroni <alessiomaronidev@gmail.com>"]
 edition = "2024"
-description = "Bare-metal MISRA-compliant HAL for RP2350 (Hazard3 RISC-V)"
-license = "MIT"
+description = "Bare-metal MISRA C compliant HAL (Hardware Abstraction Layer) for RP2350 Hazard3 RISC-V"
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/alessioMaroni/rp2350-hazard3-hall"
+documentation = "https://github.com/alessioMaroni/rp2350-hazard3-hall#readme"
 readme = "README.md"
-keywords = ["embedded", "hal", "rp2350", "riscv", "bare-metal"]
+keywords = ["rp2350", "hazard3", "riscv", "hal", "misra"]
 categories = ["embedded", "hardware-support", "no-std"]
 
 include = [
