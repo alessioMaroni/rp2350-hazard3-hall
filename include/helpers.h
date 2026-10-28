@@ -30,6 +30,11 @@ __attribute__((always_inline)) static inline void arch_asm_nop(void)
 }
 
 /**
+ * @brief Helper macro for 32-bit register dereferencing.
+ */
+#define REG32(addr) (*((volatile uint32_t *)(uintptr_t)(addr)))
+
+/**
  * @brief Bare-metal assertion macro for contract and state invariant checking.
  *
  * Evaluates the specified boolean condition. If the condition evaluates to false,
