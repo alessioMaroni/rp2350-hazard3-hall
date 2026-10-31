@@ -1,5 +1,5 @@
 [package]
-name = "rp2350-hazard3-hall"
+name = "rp2350-hazard3-hal"
 version = "0.1.1"
 authors = ["Alessio Maroni <alessiomaronidev@gmail.com>"]
 edition = "2024"

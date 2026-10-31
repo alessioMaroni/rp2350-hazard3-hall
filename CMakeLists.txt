@@ -6,7 +6,7 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR riscv32)
 
 # Define the project name, version, description, and supported languages
-project(rp2350-hazard3-hall
+project(rp2350-hazard3-hal
     VERSION 0.1.1
     DESCRIPTION "Bare-metal MISRA C compliant HAL for RP2350 Hazard3 RISC-V"
     LANGUAGES C
@@ -37,15 +37,15 @@ else()
 endif()
 
 # Define the static library target with its source files
-add_library(rp2350-hazard3-hall STATIC
+add_library(rp2350-hazard3-hal STATIC
     src/serial.c
     src/time.c
 )
 
 # Apply compilation flags specifically for GCC and Clang compilers
-target_compile_options(rp2350-hazard3-hall PRIVATE
+target_compile_options(rp2350-hazard3-hal PRIVATE
     $<$<OR:$<C_COMPILER_ID:GNU>,$<C_COMPILER_ID:Clang>>:${SAFETY_COMPILE_OPTIONS}>
 )
 
 # Set the public include directories for the library target
-target_include_directories(rp2350-hazard3-hall PUBLIC include)
+target_include_directories(rp2350-hazard3-hal PUBLIC include)

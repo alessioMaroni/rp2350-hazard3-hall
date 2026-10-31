@@ -7,7 +7,7 @@ fn main() {
     let include_dir = manifest_path.join("include");
     let src_uart = manifest_path.join("src").join("uart.c");
 
-    println!("cargo:rerun-if-changed=include/rp2350_hall.h");
+    println!("cargo:rerun-if-changed=include/rp2350_hal.h");
     println!("cargo:rerun-if-changed=include/uart.h");
     println!("cargo:rerun-if-changed=include/serial.h");
     println!("cargo:rerun-if-changed=include/helpers.h");
@@ -52,10 +52,10 @@ fn main() {
             .flag("-mcmodel=medlow");
     }
 
-    build.compile("rp2350-hazard3-hall");
+    build.compile("rp2350-hazard3-hal");
 
     let bindings = bindgen::Builder::default()
-        .header(include_dir.join("rp2350_hall.h").to_str().unwrap())
+        .header(include_dir.join("rp2350_hal.h").to_str().unwrap())
         .clang_arg(format!("-I{}", include_dir.display()))
         .use_core()
         .wrap_unsafe_ops(true)
@@ -63,10 +63,11 @@ fn main() {
         .raw_line("#[allow(warnings)]")
         .raw_line("#[allow(unsafe_op_in_unsafe_fn)]")
         .generate()
-        .expect("Impossibile generare i bindings C");
+	.expect("Unable to generate C bindings");
 
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
-    bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Impossibile scrivere bindings.rs");
+	bindings
+    	.write_to_file(out_path.join("bindings.rs"))
+    	.expect("Unable to write bindings.rs");
+
 }

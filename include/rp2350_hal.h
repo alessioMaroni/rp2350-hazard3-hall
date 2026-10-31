@@ -1,5 +1,5 @@
 /**
- * @file rp2350_hall.h
+ * @file rp2350_hal.h
  * @brief Master header file for the RP2350 Hazard3 Hardware Abstraction Layer (HAL).
  *
  * Serves as the primary entry point for the C library and Rust FFI bindings.
@@ -7,8 +7,8 @@
  * under C++ extern guards for cross-language compatibility.
  */
 
-#ifndef RP2350_HALL_H
-#define RP2350_HALL_H
+#ifndef RP2350_HAL_H
+#define RP2350_HAL_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,4 +20,4 @@ extern "C" {
 }
 #endif
 
-#endif /* RP2350_HALL_H */
+#endif /* RP2350_HAL_H */
